@@ -5,10 +5,7 @@ from pulp import *
 
 DB_PATH = "data/db/supply_chain.db"
 
-
-# ---------------------------
-# 1. LOAD FORECAST
-# ---------------------------
+#LOAD FORECAST
 def load_forecast():
     conn = sqlite3.connect(DB_PATH)
 
@@ -23,10 +20,7 @@ def load_forecast():
 
     return df
 
-
-# ---------------------------
-# 2. ADD COST MODEL
-# ---------------------------
+#ADD COST MODEL
 def add_cost(df):
     np.random.seed(42)
 
@@ -37,9 +31,7 @@ def add_cost(df):
     return df
 
 
-# ---------------------------
-# 3. OPTIMIZATION MODEL
-# ---------------------------
+#OPTIMIZATION MODEL
 def optimize(df):
     n = len(df)
 
@@ -78,10 +70,7 @@ def optimize(df):
 
     return df
 
-
-# ---------------------------
-# 4. COST COMPARISON
-# ---------------------------
+#COST COMPARISON
 def calculate_cost(df):
     df["baseline_order"] = df["forecast"]
 
@@ -102,19 +91,14 @@ def calculate_cost(df):
 
     return df
 
-
-# ---------------------------
-# 5. SAVE RESULT
-# ---------------------------
+#SAVE RESULT
 def save_result(df):
     conn = sqlite3.connect(DB_PATH)
     df.to_sql("optimization_result", conn, if_exists="replace", index=False)
     conn.close()
 
 
-# ---------------------------
-# MAIN PIPELINE
-# ---------------------------
+#MAIN PIPELINE
 if __name__ == "__main__":
     print("Loading forecast...")
     df = load_forecast()
